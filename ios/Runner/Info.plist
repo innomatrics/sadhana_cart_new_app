@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+
+    <!-- Firebase & Push Notifications -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <true/>
+
+    <!-- Location Permissions -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to show nearby services and offers.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location for continuous tracking and delivery updates.</string>
+
+    <!-- Camera & Photo Library Access -->
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take pictures.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to select and upload photos.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need access to your photo library to upload pictures.</string>
+
+    <!-- Microphone Access -->
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need access to your microphone for voice input and calls.</string>
+
+    <!-- Internet & Network Access -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+
+    <!-- Bluetooth, Motion & Health -->
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>We need access to Bluetooth to connect with nearby devices.</string>
+    <key>NSMotionUsageDescription</key>
+    <string>We need your motion data for activity-related features.</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>We need access to update health data.</string>
+    <key>NSHealthShareUsageDescription</key>
+    <string>We need access to read health data.</string>
+
+    <!-- File Access -->
+    <key>NSFileSystemUsageDescription</key>
+    <string>We need access to your file system to store and access files.</string>
+
+    <!-- App Metadata -->
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>Sadhana Cart</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>sadhana_cart</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+
+    <!-- Launch Screen -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+    <!-- Supported Orientations -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+
+    <!-- Rendering and Input -->
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+</dict>
+</plist>

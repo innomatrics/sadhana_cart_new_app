@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "126398142924",
+    "project_id": "sadhana-cart",
+    "storage_bucket": "sadhana-cart.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126398142924:android:cb36224513b0c26785a569",
+        "android_client_info": {
+          "package_name": "com.innomatrics.sadhana_cart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126398142924-h98c3lckqi5rp2p4he7s9kv4ii04beqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtraD4VRw_kJsltygAqzKtcYdyfnLeHZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126398142924-8t9578dnble72nfpjg8o77u4v7ta6n8d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126398142924-iko2cbqi6d86ru9pbiv35j4qfru2r1gp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sadhanacart.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
