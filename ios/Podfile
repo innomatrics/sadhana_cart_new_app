@@ -1,8 +1,6 @@
 # ios/Podfile
-
 platform :ios, '15.0'
 
-# Disable CocoaPods analytics to speed up Flutter build
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -11,8 +9,8 @@ project 'Runner', {
   'Release' => :release,
 }
 
-# Use the Flutter SDK's built-in podhelper script
-require File.expand_path(File.join('..', 'Flutter', 'podhelper'), __FILE__)
+flutter_application_path = File.expand_path('../Flutter', __FILE__)
+eval(File.read(File.join(flutter_application_path, 'podhelper.rb')), binding)
 
 target 'Runner' do
   use_frameworks!
