@@ -9,6 +9,17 @@ project 'Runner', {
   'Profile' => :release,
   'Release' => :release,
 }
+# ios/Podfile
+
+platform :ios, '15.0' 
+
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+project 'Runner', {
+  'Debug' => :debug,
+  'Profile' => :release,
+  'Release' => :release,
+}
 
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
