@@ -11,26 +11,19 @@ project 'Runner', {
   'Release' => :release,
 }
 
-def flutter_installation
-  # Ensure Flutter is set up correctly
-  flutter_root = File.expand_path(File.join('..', 'flutter'))
-  unless File.exist?(flutter_root)
-    flutter_root = ENV['FLUTTER_ROOT']
-  end
-  raise "Could not find Flutter root" unless flutter_root
-end
-
-# You can remove the above method if you don't use custom Flutter setup
-
-require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), __dir__)
-
+# Target definition
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  flutter_install_all_ios_pods File.dirname(File.realpath(_FILE_))
+  # Flutter Pod helper path (Flutter 3.x+)
+  require File.join(File.dirname(__FILE__), '../Flutter/Flutter.framework/flutter_tools/bin/podhelper')
+
+  # Install all Flutter iOS pods
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
+# Post-install hook to ensure proper build settings
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
