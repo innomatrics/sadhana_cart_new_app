@@ -22,7 +22,7 @@ end
 
 # You can remove the above method if you don't use custom Flutter setup
 
-require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), _dir_)
+require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), __dir__)
 
 target 'Runner' do
   use_frameworks!
