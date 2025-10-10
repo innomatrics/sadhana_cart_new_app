@@ -2,7 +2,7 @@
 
 platform :ios, '15.0'
 
-# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+# Disable CocoaPods analytics to speed up Flutter build
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {
@@ -11,19 +11,16 @@ project 'Runner', {
   'Release' => :release,
 }
 
-# Target definition
+# Use the Flutter SDK's built-in podhelper script
+require File.expand_path(File.join('..', 'Flutter', 'podhelper'), __FILE__)
+
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # Flutter Pod helper path (Flutter 3.x+)
-  require File.join(File.dirname(__FILE__), '../Flutter/Flutter.framework/flutter_tools/bin/podhelper')
-
-  # Install all Flutter iOS pods
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
-# Post-install hook to ensure proper build settings
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
