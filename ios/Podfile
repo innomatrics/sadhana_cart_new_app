@@ -1,17 +1,6 @@
 # ios/Podfile
 
-platform :ios, '15.0' 
-
-ENV['COCOAPODS_DISABLE_STATS'] = 'true'
-
-project 'Runner', {
-  'Debug' => :debug,
-  'Profile' => :release,
-  'Release' => :release,
-}
-# ios/Podfile
-
-platform :ios, '15.0' 
+platform :ios, '15.0'
 
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
