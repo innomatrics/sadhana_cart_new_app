@@ -139,27 +139,27 @@ class _SignInMobileState extends ConsumerState<SignInMobile> {
                         style: TextStyle(color: Colors.grey),
                       ),
                     ),
-                    Center(
-                      child: RoundedSigninButton(
-                        imagePath: AppImages.googleSvg,
-                        onTap: () async {
-                          final bool isSuccess =
-                              await GoogleLoginService.signInWithGoogle(
-                                context: context,
-                              );
-                          ref.read(onboardProvider.notifier).setSeen();
-                          auth.setLoggedIn(true);
-                          auth.setLoggedIn(true);
-                          ref.invalidate(getCurrentUserProfile);
-                          if (isSuccess && context.mounted) {
-                            navigateToReplacement(
-                              context: context,
-                              screen: const BottomNavOption(),
-                            );
-                          }
-                        },
-                      ),
-                    ),
+                    // Center(
+                    //   child: RoundedSigninButton(
+                    //     imagePath: AppImages.googleSvg,
+                    //     onTap: () async {
+                    //       final bool isSuccess =
+                    //           await GoogleLoginService.signInWithGoogle(
+                    //             context: context,
+                    //           );
+                    //       ref.read(onboardProvider.notifier).setSeen();
+                    //       auth.setLoggedIn(true);
+                    //       auth.setLoggedIn(true);
+                    //       ref.invalidate(getCurrentUserProfile);
+                    //       if (isSuccess && context.mounted) {
+                    //         navigateToReplacement(
+                    //           context: context,
+                    //           screen: const BottomNavOption(),
+                    //         );
+                    //       }
+                    //     },
+                    //   ),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
