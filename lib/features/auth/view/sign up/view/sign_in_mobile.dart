@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/core/auth%20service/auth_service.dart';
 import 'package:sadhana_cart/core/common%20repo/auth/auth_notifier.dart';
-import 'package:sadhana_cart/core/common%20repo/auth/onboard_notifier.dart';
-import 'package:sadhana_cart/core/constants/app_images.dart';
 import 'package:sadhana_cart/core/disposable/disposable.dart';
 import 'package:sadhana_cart/core/helper/navigation_helper.dart';
 import 'package:sadhana_cart/core/helper/validation_helper.dart';
-import 'package:sadhana_cart/core/service/google_auth_service.dart';
 import 'package:sadhana_cart/core/widgets/custom_elevated_button.dart';
 import 'package:sadhana_cart/core/widgets/custom_text_button.dart';
 import 'package:sadhana_cart/core/widgets/custom_text_form_field.dart';
 import 'package:sadhana_cart/core/widgets/loader.dart';
-import 'package:sadhana_cart/core/widgets/rounded_signin_button.dart';
 import 'package:sadhana_cart/features/auth/view/forgot%20password/view/forgot_password_mobile.dart';
 import 'package:sadhana_cart/features/auth/view/sign%20up/view/sign_up_mobile.dart';
 import 'package:sadhana_cart/features/bottom%20nav/view/bottom_nav_bar_mobile.dart';
-import 'package:sadhana_cart/features/bottom%20nav/view/bottom_nav_option.dart';
 import 'package:sadhana_cart/features/profile/view%20model/user_notifier.dart';
 
 class SignInMobile extends ConsumerStatefulWidget {
@@ -42,7 +37,7 @@ class _SignInMobileState extends ConsumerState<SignInMobile> {
   Widget build(BuildContext context) {
     final loader = ref.watch(loadingProvider);
     final passwordEye = ref.watch(passEyeProvider);
-    final auth = ref.watch(authNotifierProvider.notifier);
+    // final auth = ref.watch(authNotifierProvider.notifier);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -139,27 +134,27 @@ class _SignInMobileState extends ConsumerState<SignInMobile> {
                         style: TextStyle(color: Colors.grey),
                       ),
                     ),
-                    Center(
-                      child: RoundedSigninButton(
-                        imagePath: AppImages.googleSvg,
-                        onTap: () async {
-                          final bool isSuccess =
-                              await GoogleLoginService.signInWithGoogle(
-                                context: context,
-                              );
-                          ref.read(onboardProvider.notifier).setSeen();
-                          auth.setLoggedIn(true);
-                          auth.setLoggedIn(true);
-                          ref.invalidate(getCurrentUserProfile);
-                          if (isSuccess && context.mounted) {
-                            navigateToReplacement(
-                              context: context,
-                              screen: const BottomNavOption(),
-                            );
-                          }
-                        },
-                      ),
-                    ),
+                    // Center(
+                    //   child: RoundedSigninButton(
+                    //     imagePath: AppImages.googleSvg,
+                    //     onTap: () async {
+                    //       final bool isSuccess =
+                    //           await GoogleLoginService.signInWithGoogle(
+                    //             context: context,
+                    //           );
+                    //       ref.read(onboardProvider.notifier).setSeen();
+                    //       auth.setLoggedIn(true);
+                    //       auth.setLoggedIn(true);
+                    //       ref.invalidate(getCurrentUserProfile);
+                    //       if (isSuccess && context.mounted) {
+                    //         navigateToReplacement(
+                    //           context: context,
+                    //           screen: const BottomNavOption(),
+                    //         );
+                    //       }
+                    //     },
+                    //   ),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
