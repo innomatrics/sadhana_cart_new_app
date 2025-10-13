@@ -151,38 +151,38 @@ class _SignUpMobileState extends ConsumerState<SignUpMobile> {
                       style: TextStyle(color: Colors.grey),
                     ),
                   ),
-                  Center(
-                    child: RoundedSigninButton(
-                      imagePath: AppImages.googleSvg,
-                      onTap: () async {
-                        //store details for autofill data
-                        // storageNotifier.setEmailandPassword(
-                        //   email: emailController.text.trim(),
-                        //   password: passwordController.text.trim(),
-                        // );
-                        final bool isSuccess =
-                            await GoogleLoginService.signInWithGoogle(
-                              context: context,
-                            );
+                  // Center(
+                  //   child: RoundedSigninButton(
+                  //     imagePath: AppImages.googleSvg,
+                  //     onTap: () async {
+                  //       //store details for autofill data
+                  //       // storageNotifier.setEmailandPassword(
+                  //       //   email: emailController.text.trim(),
+                  //       //   password: passwordController.text.trim(),
+                  //       // );
+                  //       final bool isSuccess =
+                  //           await GoogleLoginService.signInWithGoogle(
+                  //             context: context,
+                  //           );
 
-                        if (isSuccess) {
-                          ref.read(onboardProvider.notifier).setSeen();
-                          ref.invalidate(getCurrentUserProfile);
+                  //       if (isSuccess) {
+                  //         ref.read(onboardProvider.notifier).setSeen();
+                  //         ref.invalidate(getCurrentUserProfile);
 
-                          ref
-                              .read(authNotifierProvider.notifier)
-                              .setLoggedIn(true);
+                  //         ref
+                  //             .read(authNotifierProvider.notifier)
+                  //             .setLoggedIn(true);
 
-                          if (context.mounted) {
-                            navigateToReplacement(
-                              context: context,
-                              screen: const BottomNavOption(),
-                            );
-                          }
-                        }
-                      },
-                    ),
-                  ),
+                  //         if (context.mounted) {
+                  //           navigateToReplacement(
+                  //             context: context,
+                  //             screen: const BottomNavOption(),
+                  //           );
+                  //         }
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
