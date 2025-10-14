@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/core/common%20model/category/category_model.dart';
 import 'package:sadhana_cart/core/common%20services/category/category_services.dart';
-import 'package:sadhana_cart/core/helper/connection_helper.dart';
 import 'package:sadhana_cart/core/helper/hive_helper.dart';
 
 final categoryProvider =
@@ -17,9 +16,10 @@ class CategoryNotifier extends StateNotifier<List<CategoryModel>> {
   CategoryNotifier(this.ref) : super([]);
 
   void initializeCategory() async {
-    final isInternet = await ConnectionHelper.checkInternetConnection();
-    if (!isInternet) {
-      state = HiveHelper.getCategoryModel();
-    }
+    // final isInternet = await ConnectionHelper.checkInternetConnection();
+    // if (!isInternet) {
+
+    // }
+    state = HiveHelper.getCategoryModel();
   }
 }

@@ -3,8 +3,6 @@ import 'package:sadhana_cart/core/common%20model/brand/brand_model.dart';
 import 'package:sadhana_cart/core/common%20model/product/product_model.dart';
 import 'package:sadhana_cart/core/common%20repo/product/product_notifier.dart';
 import 'package:sadhana_cart/core/common%20services/brand/brand_service.dart';
-import 'package:sadhana_cart/core/helper/connection_helper.dart';
-import 'package:sadhana_cart/core/helper/hive_helper.dart';
 
 final brandProvider = StateNotifierProvider<BrandNotifier, List<BrandModel>>(
   (ref) => BrandNotifier(ref)..initialize(),
@@ -15,12 +13,13 @@ class BrandNotifier extends StateNotifier<List<BrandModel>> {
   BrandNotifier(this.ref) : super([]);
 
   void initialize() async {
-    final bool isInternet = await ConnectionHelper.checkInternetConnection();
-    if (isInternet) {
-      state = await BrandService.fetchBrands();
-    } else {
-      state = HiveHelper.getBrands();
-    }
+    //  final bool isInternet = await ConnectionHelper.checkInternetConnection();
+    // if (isInternet) {
+
+    // } else {
+    //   state = HiveHelper.getBrands();
+    // }
+    state = await BrandService.fetchBrands();
   }
 
   List<ProductModel> getBrandProduct() {
