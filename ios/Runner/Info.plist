@@ -17,6 +17,8 @@
     <string>We need your location to show nearby services and offers.</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>We need your location for continuous tracking and delivery updates.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need access to your location both when the app is in the foreground and background for tracking your activities and providing real-time updates.</string>
 
     <!-- Camera & Photo Library Access -->
     <key>NSCameraUsageDescription</key>
