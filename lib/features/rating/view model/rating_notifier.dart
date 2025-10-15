@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:sadhana_cart/features/rating/model/rating_model.dart';
 import 'package:sadhana_cart/features/rating/model/rating_state.dart';
 import 'package:sadhana_cart/features/rating/service/rating_service.dart';

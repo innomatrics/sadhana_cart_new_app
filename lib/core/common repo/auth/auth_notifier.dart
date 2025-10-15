@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:sadhana_cart/core/helper/hive_helper.dart';
 
 class AuthNotifier extends StateNotifier<bool> {

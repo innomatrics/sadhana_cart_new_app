@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:sadhana_cart/core/common model/chat/chat_model.dart';
 import 'package:sadhana_cart/core/common services/chat_support/chat_service.dart';
 
