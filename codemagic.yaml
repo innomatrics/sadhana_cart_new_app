@@ -15,7 +15,7 @@ workflows:
 
       - name: Build signed IPA for release
         script: |
-          flutter build ipa --release
+          flutter build ipa --release --no-tree-shake-icons
 
     artifacts:
       - build/ios/ipa/*.ipa
@@ -32,3 +32,4 @@ workflows:
       email:
         recipients:
           - innomatricstechnologies@gmail.com
+
