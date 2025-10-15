@@ -4,16 +4,31 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
+      vars:
+        BUNDLE_ID: "com.innomatricstech.sadhanacart" 
     scripts:
-      - name: Build Release IPA
+      - name: Install dependencies
         script: |
           flutter clean
           flutter pub get
           cd ios && pod install && cd ..
-          flutter build ipa --release --no-codesign
+
+      - name: Build signed IPA for release
+        script: |
+          flutter build ipa --release
+
     artifacts:
       - build/ios/ipa/*.ipa
+
     publishing:
+      app_store_connect:
+        # Use environment variables set in Codemagic UI
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_ID
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: true  # optional
+        submit_to_app_store: false  # set true if ready for production
+
       email:
         recipients:
           - innomatricstechnologies@gmail.com
