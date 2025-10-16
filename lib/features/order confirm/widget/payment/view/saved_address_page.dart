@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/core/disposable/disposable.dart';
 import 'package:sadhana_cart/core/widgets/custom_elevated_button.dart';
 import 'package:sadhana_cart/core/widgets/custom_ratio_button.dart';
+import 'package:sadhana_cart/features/profile/widget/address/model/address_helper.dart';
 import 'package:sadhana_cart/features/profile/widget/address/view model/address_notifier.dart';
 import 'package:sadhana_cart/features/profile/widget/address/widget/address_loader_page.dart';
 
@@ -73,10 +74,11 @@ class _SavedAddressPageState extends ConsumerState<SavedAddressPage> {
           itemCount: addressState.addresses.length,
           itemBuilder: (context, index) {
             final address = addressState.addresses[index];
-            final icons = IconData(
-              address.icon ?? 0,
-              fontFamily: 'MaterialIcons',
-            );
+            final icon =
+                AddressHelper.icons[(address.icon ?? 0).clamp(
+                  0,
+                  AddressHelper.icons.length - 1,
+                )];
 
             return Container(
               margin: const EdgeInsets.all(12),
@@ -104,7 +106,7 @@ class _SavedAddressPageState extends ConsumerState<SavedAddressPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: Icon(icons, size: 40),
+                    leading: Icon(icon, size: 40),
                     title: Text(address.title ?? ""),
                     subtitle: Text(address.city),
                     trailing: CustomRatioButton<int>(

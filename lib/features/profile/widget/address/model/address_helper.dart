@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AddressHelper {
-  static final List<IconData> icons = [
+  static const List<IconData> icons = [
     Icons.home,
     Icons.business_center,
     Icons.local_hospital,

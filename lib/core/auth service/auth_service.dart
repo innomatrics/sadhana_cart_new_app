@@ -21,6 +21,7 @@ class AuthService {
       .collection("users");
 
   // Method to create an account
+  // Method to create an account
   static Future<bool> createAccount({
     required String email,
     required String password,
@@ -32,17 +33,22 @@ class AuthService {
     ref.read(loadingProvider.notifier).state = true;
 
     try {
-      await _auth.createUserWithEmailAndPassword(
+      // Create the user with email and password
+      final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
+      // Send email verification
+      await userCredential.user?.sendEmailVerification();
+
+      // Create user profile
       await CustomerService.createUserProfile(name: name, email: email);
 
       if (context.mounted) {
         showCustomSnackbar(
           context: context,
-          message: "Verification mail sent",
+          message: "Verification mail sent. Please check your email.",
           type: ToastType.success,
         );
       }
