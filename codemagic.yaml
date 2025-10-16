@@ -3,19 +3,23 @@ workflows:
     name: iOS Production Build
     environment:
       flutter: stable
-      xcode: latest
+      xcode: 14.3  # Specify Xcode version (use the version you prefer)
       vars:
-        BUNDLE_ID: "com.innomatricstech.sadhanacart" 
+        BUNDLE_ID: "com.innomatricstech.sadhanacart"
     scripts:
+      - name: Clean Derived Data
+        script: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData/*
+
       - name: Install dependencies
         script: |
           flutter clean
           flutter pub get
-          cd ios && pod install && cd ..
+          cd ios && pod install --verbose && cd ..
 
       - name: Build signed IPA for release
         script: |
-          flutter build ipa --release --no-tree-shake-icons
+          flutter build ipa --release --no-tree-shake-icons --verbose
 
     artifacts:
       - build/ios/ipa/*.ipa
@@ -27,9 +31,8 @@ workflows:
         key_id: $APP_STORE_CONNECT_KEY_ID
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: true  # optional
-        submit_to_app_store: false  # set true if ready for production
+        submit_to_app_store: false  # set to true when ready for production
 
       email:
         recipients:
           - innomatricstechnologies@gmail.com
-
