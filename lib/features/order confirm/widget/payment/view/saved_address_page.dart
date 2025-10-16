@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/core/disposable/disposable.dart';
 import 'package:sadhana_cart/core/widgets/custom_elevated_button.dart';
 import 'package:sadhana_cart/core/widgets/custom_ratio_button.dart';
-import 'package:sadhana_cart/features/profile/widget/address/model/address_helper.dart';
 import 'package:sadhana_cart/features/profile/widget/address/view model/address_notifier.dart';
 import 'package:sadhana_cart/features/profile/widget/address/widget/address_loader_page.dart';
 
@@ -74,11 +73,6 @@ class _SavedAddressPageState extends ConsumerState<SavedAddressPage> {
           itemCount: addressState.addresses.length,
           itemBuilder: (context, index) {
             final address = addressState.addresses[index];
-            final iconType =
-                AddressIconType.values[(address.icon ?? 0).clamp(
-                  0,
-                  AddressIconType.values.length - 1,
-                )];
             return Container(
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.all(12),
@@ -105,7 +99,7 @@ class _SavedAddressPageState extends ConsumerState<SavedAddressPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: Icon(iconType.icon, size: 40),
+                    leading: Icon(getIconByIndex(address.icon), size: 40),
                     title: Text(address.title ?? ""),
                     subtitle: Text(address.city),
                     trailing: CustomRatioButton<int>(
@@ -137,5 +131,28 @@ class _SavedAddressPageState extends ConsumerState<SavedAddressPage> {
         ),
       ),
     );
+  }
+
+  IconData getIconByIndex(int? index) {
+    switch (index) {
+      case 0:
+        return Icons.home;
+      case 1:
+        return Icons.business_center;
+      case 2:
+        return Icons.local_hospital;
+      case 3:
+        return Icons.school;
+      case 4:
+        return Icons.local_grocery_store;
+      case 5:
+        return Icons.apartment;
+      case 6:
+        return Icons.local_cafe;
+      case 7:
+        return Icons.local_library;
+      default:
+        return Icons.home;
+    }
   }
 }
