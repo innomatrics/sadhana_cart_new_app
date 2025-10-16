@@ -3,7 +3,7 @@ workflows:
     name: iOS Production Build
     environment:
       flutter: stable
-      xcode: 14.3 # Specify Xcode version (use the version you prefer)
+      xcode: 14.3
       vars:
         BUNDLE_ID: "com.innomatricstech.sadhanacart"
     scripts:
