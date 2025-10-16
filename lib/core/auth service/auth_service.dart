@@ -33,37 +33,53 @@ class AuthService {
     ref.read(loadingProvider.notifier).state = true;
 
     try {
-      // Create the user with email and password
+      // Create the user
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Send email verification
-      await userCredential.user?.sendEmailVerification();
+      final user = userCredential.user;
+      if (user == null) {
+        throw FirebaseAuthException(
+          code: 'user-null',
+          message: 'User creation failed',
+        );
+      }
 
-      // Create user profile
+      // Send email verification
+      await user.sendEmailVerification();
+
+      // Create user profile in Firestore (or other backend)
       await CustomerService.createUserProfile(name: name, email: email);
 
       if (context.mounted) {
         showCustomSnackbar(
           context: context,
-          message: "Verification mail sent. Please check your email.",
+          message: "Verification email sent. Please check your inbox.",
           type: ToastType.success,
         );
       }
+
       return true;
     } on FirebaseAuthException catch (e) {
       if (context.mounted) {
         showCustomSnackbar(
           context: context,
-          message: e.message.toString(),
+          message: e.message ?? 'Authentication error occurred.',
           type: ToastType.error,
         );
       }
-      rethrow;
+      return false;
     } catch (e) {
-      throw Exception('Account creation failed: ${e.toString()}');
+      if (context.mounted) {
+        showCustomSnackbar(
+          context: context,
+          message: 'Account creation failed: ${e.toString()}',
+          type: ToastType.error,
+        );
+      }
+      return false;
     } finally {
       ref.read(loadingProvider.notifier).state = false;
     }

@@ -74,12 +74,11 @@ class _SavedAddressPageState extends ConsumerState<SavedAddressPage> {
           itemCount: addressState.addresses.length,
           itemBuilder: (context, index) {
             final address = addressState.addresses[index];
-            final icon =
-                AddressHelper.icons[(address.icon ?? 0).clamp(
+            final iconType =
+                AddressIconType.values[(address.icon ?? 0).clamp(
                   0,
-                  AddressHelper.icons.length - 1,
+                  AddressIconType.values.length - 1,
                 )];
-
             return Container(
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.all(12),
@@ -106,7 +105,7 @@ class _SavedAddressPageState extends ConsumerState<SavedAddressPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: Icon(icon, size: 40),
+                    leading: Icon(iconType.icon, size: 40),
                     title: Text(address.title ?? ""),
                     subtitle: Text(address.city),
                     trailing: CustomRatioButton<int>(

@@ -99,11 +99,11 @@ class _AddAddressPageState extends State<AddAddressPage> {
                         children: [
                           Expanded(
                             child: CustomDropDown<String>(
-                              items: AddressHelper.addressPlaces
+                              items: AddressIconType.values
                                   .map(
                                     (e) => DropdownMenuItem<String>(
-                                      value: e,
-                                      child: Text(e),
+                                      value: e.label,
+                                      child: Text(e.label),
                                     ),
                                   )
                                   .toList(),
@@ -121,11 +121,11 @@ class _AddAddressPageState extends State<AddAddressPage> {
                           const SizedBox(width: 40),
                           Expanded(
                             child: CustomDropDown<IconData>(
-                              items: AddressHelper.icons
+                              items: AddressIconType.values
                                   .map(
                                     (e) => DropdownMenuItem<IconData>(
-                                      value: e,
-                                      child: Icon(e),
+                                      value: e.icon,
+                                      child: Icon(e.icon),
                                     ),
                                   )
                                   .toList(),
