@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/core/disposable/disposable.dart';
 import 'package:sadhana_cart/core/helper/navigation_helper.dart';
-import 'package:sadhana_cart/core/widgets/custom_drop_down.dart';
 import 'package:sadhana_cart/core/widgets/custom_elevated_button.dart';
 import 'package:sadhana_cart/core/widgets/custom_text_form_field.dart';
 import 'package:sadhana_cart/core/widgets/loader.dart';
-import 'package:sadhana_cart/features/profile/widget/address/model/address_helper.dart';
 import 'package:sadhana_cart/features/profile/widget/address/model/address_model.dart';
 import 'package:sadhana_cart/features/profile/widget/address/service/address_service.dart';
 
@@ -79,54 +77,58 @@ class _EditAddressPageState extends ConsumerState<EditAddressPage> {
                   child: Column(
                     spacing: 20,
                     children: [
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: CustomDropDown<String>(
-                              items: AddressIconType.values
-                                  .map(
-                                    (e) => DropdownMenuItem<String>(
-                                      value: e.label,
-                                      child: Text(e.label),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (value) =>
-                                  ref
-                                          .read(
-                                            userAddressTitleProvider.notifier,
-                                          )
-                                          .state =
-                                      value ?? "Home",
-                              value: title,
-                              labelText: "Select Address Type",
-                            ),
-                          ),
-                          const SizedBox(width: 40),
-                          Expanded(
-                            child: CustomDropDown<IconData>(
-                              items: AddressIconType.values
-                                  .map(
-                                    (e) => DropdownMenuItem<IconData>(
-                                      value: e.icon,
-                                      child: Icon(e.icon),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (value) =>
-                                  ref
-                                          .read(
-                                            userAdderssIconProvider.notifier,
-                                          )
-                                          .state =
-                                      value ?? Icons.home,
-                              value: icon,
-                              labelText: "Select Address Icon",
-                            ),
-                          ),
-                        ],
-                      ),
+                      //we are commenting this because we are not using this feature
+                      // const Text("Select Address Type and Icon"),
+                      //ios side they are rejecting this feature
+
+                      // const SizedBox(height: 20),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: CustomDropDown<String>(
+                      //         items: AddressIconType.values
+                      //             .map(
+                      //               (e) => DropdownMenuItem<String>(
+                      //                 value: e.label,
+                      //                 child: Text(e.label),
+                      //               ),
+                      //             )
+                      //             .toList(),
+                      //         onChanged: (value) =>
+                      //             ref
+                      //                     .read(
+                      //                       userAddressTitleProvider.notifier,
+                      //                     )
+                      //                     .state =
+                      //                 value ?? "Home",
+                      //         value: title,
+                      //         labelText: "Select Address Type",
+                      //       ),
+                      //     ),
+                      //     const SizedBox(width: 40),
+                      //     Expanded(
+                      //       child: CustomDropDown<IconData>(
+                      //         items: AddressIconType.values
+                      //             .map(
+                      //               (e) => DropdownMenuItem<IconData>(
+                      //                 value: e.icon,
+                      //                 child: Icon(e.icon),
+                      //               ),
+                      //             )
+                      //             .toList(),
+                      //         onChanged: (value) =>
+                      //             ref
+                      //                     .read(
+                      //                       userAdderssIconProvider.notifier,
+                      //                     )
+                      //                     .state =
+                      //                 value ?? Icons.home,
+                      //         value: icon,
+                      //         labelText: "Select Address Icon",
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       CustomTextFormField(
                         controller: nameController,
                         labelText: "Name",

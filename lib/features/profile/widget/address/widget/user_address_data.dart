@@ -45,8 +45,6 @@ class _UserAddressDataState extends ConsumerState<UserAddressData> {
       physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         final address = addressState.addresses[index];
-        final icons = IconData(address.icon ?? 0, fontFamily: 'MaterialIcons');
-
         return Container(
           margin: const EdgeInsets.all(12),
           padding: const EdgeInsets.all(12),
@@ -67,7 +65,6 @@ class _UserAddressDataState extends ConsumerState<UserAddressData> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                leading: Icon(icons, size: 40),
                 title: Text(address.title ?? ""),
                 subtitle: Text(address.city),
                 trailing: CustomTextButton(
