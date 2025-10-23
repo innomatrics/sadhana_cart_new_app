@@ -28,9 +28,13 @@
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>We need access to your photo library to upload pictures.</string>
 
-    <!-- Microphone Access -->
-    <key>NSMicrophoneUsageDescription</key>
-    <string>We need access to your microphone for voice input and calls.</string>
+    <!-- Push Notification Permissions -->
+    <key>NSUserNotificationUsageDescription</key>
+    <string>We need to send you notifications about your orders, deliveries, and important updates.</string>
+
+    <!-- iOS 10+ Push Notification Permissions -->
+    <key>aps-environment</key>
+    <string>development</string>
 
     <!-- Internet & Network Access -->
     <key>NSAppTransportSecurity</key>

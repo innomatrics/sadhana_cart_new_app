@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/core/app%20routes/app_routes.dart';
 import 'package:sadhana_cart/core/colors/app_color.dart';
 import 'package:sadhana_cart/core/helper/main_helper.dart';
+import 'dart:io';
 import 'package:sadhana_cart/core/helper/permission_helper.dart';
 import 'package:sadhana_cart/core/service/notification_service.dart';
 import 'package:sadhana_cart/features/splash/view/splash_page_mobile.dart';
@@ -33,7 +34,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _requestNotificationPermission() async {
-    await PermissionHelper.askNotificationPermission();
+    // iOS permission is already requested inside NotificationService.initialize().
+    // Avoid double prompts on iOS; still request on Android (Tiramisu+).
+    if (Platform.isAndroid) {
+      await PermissionHelper.askNotificationPermission();
+    }
   }
 
   @override
@@ -47,6 +52,7 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: ThemeMode.light,
       routes: AppRoutes.routes,
+      navigatorKey: NotificationService.navigatorKey,
       home: const SplashPageMobile(),
     );
   }

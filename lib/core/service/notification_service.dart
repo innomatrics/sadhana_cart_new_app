@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/core/common%20model/admin/admin_model.dart';
@@ -12,6 +13,7 @@ import 'package:sadhana_cart/core/common%20model/notification/notification_model
 import 'package:sadhana_cart/core/helper/navigation_helper.dart';
 import 'package:sadhana_cart/features/notification/view%20model/notification_notifier.dart';
 
+//
 class NotificationService {
   static final Dio dio = Dio();
   final ProviderContainer container;
@@ -19,13 +21,17 @@ class NotificationService {
   NotificationService({required this.container});
 
   static const AndroidInitializationSettings androidInitSettings =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
+  AndroidInitializationSettings('@mipmap/ic_launcher');
 
   static final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
+
+  static const DarwinInitializationSettings iosInitSettings =
+  DarwinInitializationSettings();
 
   static const InitializationSettings initSettings = InitializationSettings(
     android: androidInitSettings,
+    iOS: iosInitSettings,
   );
 
   static const String notificationUrl =
@@ -40,8 +46,8 @@ class NotificationService {
 
   @pragma('vm:entry-point')
   static Future<void> firebaseMessagingBackgroundHandler(
-    RemoteMessage message,
-  ) async {
+      RemoteMessage message,
+      ) async {
     await _showNotification(
       title: message.notification?.title ?? 'Background Notification',
       body: message.notification?.body ?? 'You have a new message',
@@ -67,6 +73,7 @@ class NotificationService {
 
       await _createNotificationChannel();
 
+      // Request permissions for both platforms
       if (Platform.isIOS) {
         await FirebaseMessaging.instance.requestPermission(
           alert: true,
@@ -74,6 +81,21 @@ class NotificationService {
           sound: true,
           provisional: false,
         );
+
+        // Ensure notifications are shown while app is in foreground (iOS)
+        await FirebaseMessaging.instance
+            .setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+      }
+
+      // Make sure FCM auto-init is enabled
+      try {
+        await FirebaseMessaging.instance.setAutoInitEnabled(true);
+      } catch (e) {
+        log('Failed to enable FCM auto-init: $e');
       }
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
@@ -108,23 +130,62 @@ class NotificationService {
         }
       });
 
-      String? token = await FirebaseMessaging.instance.getToken();
+      // Wait for token to be available (especially important for iOS APNS token)
+      String? token;
+      int retryCount = 0;
+      const maxRetries = 10;
 
-      final uid = FirebaseAuth.instance.currentUser?.uid;
-      if (token != null && uid != null) {
-        await FirebaseFirestore.instance.collection('users').doc(uid).update({
-          'fcmToken': token,
-        });
+      while (token == null && retryCount < maxRetries) {
+        try {
+          token = await FirebaseMessaging.instance.getToken();
+          if (token != null) {
+            log('FCM Token obtained: $token');
+            break;
+          }
+        } catch (e) {
+          log('Token not available yet, attempt ${retryCount + 1}: $e');
+        }
+
+        retryCount++;
+        if (retryCount < maxRetries) {
+          await Future.delayed(const Duration(seconds: 2));
+        }
       }
 
-      FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+      if (token != null) {
         final uid = FirebaseAuth.instance.currentUser?.uid;
         if (uid != null) {
           await FirebaseFirestore.instance.collection('users').doc(uid).update({
-            'fcmToken': newToken,
+            'fcmToken': token,
           });
         }
-      });
+      } else {
+        String? manualToken;
+        if (Platform.isIOS && kDebugMode) {
+          manualToken = 'SIMULATOR_TEST_TOKEN_028272';
+        }
+        if (manualToken != null) {
+          final uid = FirebaseAuth.instance.currentUser?.uid;
+          if (uid != null) {
+            await FirebaseFirestore.instance.collection('users').doc(uid).update({
+              'fcmToken': manualToken,
+            });
+          }
+        } else {
+          log('Failed to obtain FCM token after $maxRetries attempts');
+          if (Platform.isIOS) {
+            log('If running on the iOS Simulator, APNS is unavailable; try on a physical device.');
+          }
+          FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+            final uid = FirebaseAuth.instance.currentUser?.uid;
+            if (uid != null) {
+              await FirebaseFirestore.instance.collection('users').doc(uid).update({
+                'fcmToken': newToken,
+              });
+            }
+          });
+        }
+      }
     } catch (e) {
       log('Error initializing notifications: $e');
     }
@@ -141,10 +202,11 @@ class NotificationService {
 
       await _localNotificationsPlugin
           .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin
-          >()
+          AndroidFlutterLocalNotificationsPlugin
+      >()
           ?.createNotificationChannel(channel);
     }
+    // For iOS, notification permissions are handled by permission_handler
   }
 
   static Future<void> _showNotification({
@@ -153,18 +215,25 @@ class NotificationService {
   }) async {
     try {
       const AndroidNotificationDetails androidDetails =
-          AndroidNotificationDetails(
-            'high_importance_channel',
-            'General Notifications',
-            channelDescription: 'Used for general notifications',
-            importance: Importance.max,
-            priority: Priority.high,
-            showWhen: true,
-            playSound: true,
-          );
+      AndroidNotificationDetails(
+        'high_importance_channel',
+        'General Notifications',
+        channelDescription: 'Used for general notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+        showWhen: true,
+        playSound: true,
+      );
+
+      const DarwinNotificationDetails iosDetails = DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      );
 
       const NotificationDetails platformDetails = NotificationDetails(
         android: androidDetails,
+        iOS: iosDetails,
       );
 
       await _localNotificationsPlugin.show(

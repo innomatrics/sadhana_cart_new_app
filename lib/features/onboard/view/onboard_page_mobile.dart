@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sadhana_cart/features/onboard/model/onboard_page_model.dart';
 import 'package:sadhana_cart/features/onboard/view%20model/onboard_view_model.dart';
@@ -12,11 +13,12 @@ class OnboardPageMobile extends ConsumerStatefulWidget {
 
 class _OnboardPageMobileState extends ConsumerState<OnboardPageMobile> {
   late final PageController _pageController;
-
+  int get idx => ref.watch(onboardDotController);
   @override
   void initState() {
     super.initState();
     final currentIndex = ref.read(onboardDotController);
+    log('OnboardPageMobile.initState: currentIndex=$currentIndex');
     _pageController = PageController(initialPage: currentIndex);
   }
 
@@ -24,6 +26,7 @@ class _OnboardPageMobileState extends ConsumerState<OnboardPageMobile> {
   void didUpdateWidget(covariant OnboardPageMobile oldWidget) {
     super.didUpdateWidget(oldWidget);
     final currentIndex = ref.read(onboardDotController);
+    log('OnboardPageMobile.didUpdateWidget: animating to index=$currentIndex');
     _pageController.animateToPage(
       currentIndex,
       duration: const Duration(milliseconds: 300),
@@ -33,10 +36,14 @@ class _OnboardPageMobileState extends ConsumerState<OnboardPageMobile> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      controller: _pageController,
-      physics: const NeverScrollableScrollPhysics(),
-      children: onboardPages,
+    log('OnboardPageMobile.build: idx=$idx');
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: onboardPages,
+      ),
     );
   }
 
